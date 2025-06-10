@@ -2,8 +2,23 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
+import ArticleModal from "@/components/ArticleModal";
+import { useState } from "react";
 
 const BlogSection = () => {
+  const [selectedArticle, setSelectedArticle] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleReadArticle = (article: any) => {
+    setSelectedArticle(article);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedArticle(null);
+  };
+
   const articles = [
     {
       title: "Почему Rust завоевывает мир системного программирования",
@@ -126,7 +141,10 @@ const BlogSection = () => {
                     </span>
                   </div>
                 </div>
-                <Button className="bg-purple-600 hover:bg-purple-700">
+                <Button
+                  className="bg-purple-600 hover:bg-purple-700"
+                  onClick={() => handleReadArticle(articles[0])}
+                >
                   <Icon name="BookOpen" size={16} className="mr-2" />
                   Читать статью
                 </Button>
@@ -193,6 +211,7 @@ const BlogSection = () => {
                     variant="ghost"
                     size="sm"
                     className="text-purple-600 hover:text-purple-700 hover:bg-purple-50"
+                    onClick={() => handleReadArticle(article)}
                   >
                     <Icon name="ArrowRight" size={14} />
                   </Button>
@@ -213,6 +232,12 @@ const BlogSection = () => {
           </Button>
         </div>
       </div>
+
+      <ArticleModal
+        article={selectedArticle}
+        isOpen={isModalOpen}
+        onClose={closeModal}
+      />
     </section>
   );
 };

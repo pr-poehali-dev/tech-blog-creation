@@ -2,8 +2,23 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
 import { Card } from "@/components/ui/card";
+import { useScroll } from "@/hooks/useScroll";
 
 const HeaderComponent = () => {
+  const { scrollToSection, openExternalLink } = useScroll();
+
+  const handleReadBlog = () => {
+    scrollToSection("blog");
+  };
+
+  const handleGitHub = () => {
+    openExternalLink("https://github.com");
+  };
+
+  const handleSubscribe = () => {
+    scrollToSection("tools");
+  };
+
   return (
     <header className="relative bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background decoration */}
@@ -42,7 +57,10 @@ const HeaderComponent = () => {
             </a>
           </div>
 
-          <Button className="bg-purple-600 hover:bg-purple-700 text-white">
+          <Button
+            className="bg-purple-600 hover:bg-purple-700 text-white"
+            onClick={handleSubscribe}
+          >
             Подписаться
           </Button>
         </nav>
@@ -71,6 +89,7 @@ const HeaderComponent = () => {
             <Button
               size="lg"
               className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 text-lg"
+              onClick={handleReadBlog}
             >
               <Icon name="BookOpen" size={20} className="mr-2" />
               Читать блог
@@ -79,6 +98,7 @@ const HeaderComponent = () => {
               size="lg"
               variant="outline"
               className="px-8 py-3 text-lg border-purple-200 text-purple-700 hover:bg-purple-50"
+              onClick={handleGitHub}
             >
               <Icon name="Github" size={20} className="mr-2" />
               GitHub
